@@ -1,0 +1,20 @@
+[requires]
+glfw/3.3.4
+glew/2.1.0
+glm/0.9.9.8
+assimp/5.0.0
+imgui/1.85
+stb/cci.20210713
+
+[generators]
+cmake
+
+[imports]
+bin, *.dll -> ./bin
+bin, *.pdb -> ./bin
+
+./res/bindings, imgui_impl_glfw.cpp -> ../Viewer/ViewerCore/bindings
+./res/bindings, imgui_impl_opengl3.cpp -> ../Viewer/ViewerCore/bindings
+./res/bindings, imgui_impl_glfw.h -> ../Viewer/ViewerCore/bindings
+./res/bindings, imgui_impl_opengl3.h -> ../Viewer/ViewerCore/bindings
+./res/bindings, imgui_impl_opengl3_loader.h-> ../Viewer/ViewerCore/bindings
