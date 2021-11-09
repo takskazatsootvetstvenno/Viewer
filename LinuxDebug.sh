@@ -2,6 +2,7 @@
 sudo pip install conan
 sudo apt-get -y install cmake
 sudo apt-get install libgl1-mesa-dev
+sudo apt-get install libglu1-mesa-dev
 
 cd ..
 rm -r build
