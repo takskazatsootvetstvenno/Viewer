@@ -1,3 +1,4 @@
+
 # Folders
 ViewerCore/bindings
 
@@ -33,3 +34,6 @@ ViewerCore/bindings
 *.exe
 *.out
 *.app
+
+#exeptions
+!data/Models/map.obj
