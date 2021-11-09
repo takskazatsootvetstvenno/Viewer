@@ -62,7 +62,6 @@ target_include_directories(${CORE_PROJECT_NAME} PRIVATE bindings)
 
 target_link_libraries(${CORE_PROJECT_NAME} ${CONAN_LIBS})
 
-message("POST BUILD??")
 add_custom_command(TARGET ${CORE_PROJECT_NAME}
     POST_BUILD 
     COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_SOURCE_DIR}/data/Shaders/General.frag ${PROJECT_BINARY_DIR}/ViewerCore/Shaders/General.frag
@@ -70,3 +69,14 @@ add_custom_command(TARGET ${CORE_PROJECT_NAME}
     COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_SOURCE_DIR}/data/Shaders/Red.frag ${PROJECT_BINARY_DIR}/ViewerCore/Shaders/Red.frag
     COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_SOURCE_DIR}/data/Shaders/Red.vert ${PROJECT_BINARY_DIR}/ViewerCore/Shaders/Red.vert
 )
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+	add_compile_definitions(CMAKE_BUILD_TYPE_RELEASE)
+	message("It is Release!" )
+else()
+	add_compile_definitions(CMAKE_BUILD_TYPE_DEBUG)
+	message("It is Debug!" )
+endif()
+
+install(TARGETS ${CORE_PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX}/install)
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/data/Shaders DESTINATION ${CMAKE_INSTALL_PREFIX}/install)
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/data/Models DESTINATION ${CMAKE_INSTALL_PREFIX}/install)

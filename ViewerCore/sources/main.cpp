@@ -5,10 +5,10 @@
 
 int main()
 {
-#ifdef DEBUG
-	TestEngine::LogManager::Info() << "This is DEBUG solution\n" << TestEngine::LogManager::Show();
-#else
+#if CMAKE_BUILD_TYPE_RELEASE
 	TestEngine::LogManager::Info() << "This is RELEASE solution\n" << TestEngine::LogManager::Show();
+#else
+	TestEngine::LogManager::Info() << "This is DEBUG solution\n" << TestEngine::LogManager::Show();
 #endif
 #ifdef _WIN32 
 	TestEngine::LogManager::Info() << "Running on Windos OS\n" << TestEngine::LogManager::Show();

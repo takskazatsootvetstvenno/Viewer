@@ -43,7 +43,7 @@ namespace TestEngine {
 	{
 		addShaderProgram("General", "Shaders/General.vert", "Shaders/General.frag");
 		addShaderProgram("Red", "Shaders/Red.vert", "Shaders/Red.frag");
-		addModel("D:/temp/test_obj/map.obj");
+		addModel("Models/map.obj");
 		BufferLayout buffer_layout_1mat4
 		{
 			ShaderDataType::Mat4,
