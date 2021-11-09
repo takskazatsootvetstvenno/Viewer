@@ -37,8 +37,9 @@ namespace TestEngine {
 		if (is_time_draw){
 			time_t now = time(0);
 			tm ltm;
-			localtime_s(&ltm, &now);
-			m_buffer_string += std::to_string(ltm.tm_hour) + ":" + std::to_string(ltm.tm_min) + ":" + std::to_string(ltm.tm_sec) + " ";
+			//localtime_r(&ltm, &now);
+			//m_buffer_string += std::to_string(ltm.tm_hour) + ":" + std::to_string(ltm.tm_min) + ":" + std::to_string(ltm.tm_sec) + " ";
+            m_buffer_string += "Time is subjective| ";
 		}
 		switch (type)
 		{
