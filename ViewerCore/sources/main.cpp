@@ -16,6 +16,8 @@ int main()
 	TestEngine::LogManager::Info() << "Running on Unix OS\n" << TestEngine::LogManager::Show();
 #elif __linux__
 	TestEngine::LogManager::Info() << "Running on Linux OS\n" << TestEngine::LogManager::Show();
+#elif __APPLE__
+    TestEngine::LogManager::Info() << "Running on Mac OS\n" << TestEngine::LogManager::Show();
 #endif 
 	auto App = std::make_unique<TestEngine::Application>();
 	int returnCode = App->start(1280, 720, "test1");
