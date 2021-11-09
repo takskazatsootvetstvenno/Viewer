@@ -17,7 +17,6 @@ int main()
 #elif __linux__
 	TestEngine::LogManager::Info() << "Running on Linux OS\n" << TestEngine::LogManager::Show();
 #endif 
-
 	auto App = std::make_unique<TestEngine::Application>();
 	int returnCode = App->start(1280, 720, "test1");
 	//system("pause");

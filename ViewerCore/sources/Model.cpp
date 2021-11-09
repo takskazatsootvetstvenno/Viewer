@@ -127,13 +127,14 @@ namespace TestEngine {
                 tempVAO.add_vertex_buffer(tempVBO);
                 tempVAO.set_index_buffer(tempEBO);
 
-                m_vData.emplace_back(MeshData(
-                    std::move(filename),
+                MeshData m{
+                    filename, 
                     default_shader_name,
                     std::move(tempVBO),
                     std::move(tempEBO),
-                    std::move(tempVAO))
-                );
+                    std::move(tempVAO)
+                };
+                m_vData.push_back(std::move(m));
             }
         }
        
