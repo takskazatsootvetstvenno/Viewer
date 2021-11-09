@@ -8,7 +8,7 @@
 #include "VertexArray.h"
 #include "VertexBuffer.h"
 #include "Texture.h"
-#include "mesh.h"
+#include "Mesh.h"
 namespace TestEngine {
 
 	class Model
