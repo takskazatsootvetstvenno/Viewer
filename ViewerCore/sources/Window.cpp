@@ -140,7 +140,7 @@ namespace TestEngine
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-		glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);  // DEBUG
+		//glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);  // DEBUG
 
 		m_pWindow = glfwCreateWindow(m_data.m_width, m_data.m_height, m_data.m_title.c_str(), nullptr, nullptr);
 		if (!m_pWindow) {
@@ -154,14 +154,14 @@ namespace TestEngine
 		}
 
 		int flags;
-
+        /*
 		glGetIntegerv(GL_CONTEXT_FLAGS, &flags);  // DEBUG
 		if (flags & GL_CONTEXT_FLAG_DEBUG_BIT) {
 			glEnable(GL_DEBUG_OUTPUT);
 			glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 			glDebugMessageCallback(glDebugOutput, nullptr);
 			glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
-		}
+		}*/
 
 		glfwSetWindowUserPointer(m_pWindow, &m_data);
 		glfwSetWindowSizeCallback(m_pWindow,
