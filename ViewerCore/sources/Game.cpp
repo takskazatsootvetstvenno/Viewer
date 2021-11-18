@@ -3,7 +3,6 @@
 namespace TestEngine {
 	void Game::setField(unsigned int x, unsigned int y)
 	{
-		//if(map[x][5 - y] == 0) map[x][5 - y] = 1;
 		map[x][5 - y] = (map[x][5 - y] == 0)? 1:0;
 		m_needUpdate = true;
 	}

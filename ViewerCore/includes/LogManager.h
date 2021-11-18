@@ -24,6 +24,7 @@ namespace TestEngine {
         static LogManager& Debug();
         static LogManager& Command();
         static MessageCommand Show();
+        static MessageCommand Endl();
 
         LogManager(const LogManager&) = delete;
         LogManager(LogManager&&) = delete;

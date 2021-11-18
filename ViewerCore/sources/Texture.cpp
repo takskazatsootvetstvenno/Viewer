@@ -24,11 +24,9 @@ namespace TestEngine {
                 break;
             }
 
-            //  glBindTexture(GL_TEXTURE_2D, textureID);
             glTextureStorage2D(m_id, 1, GL_RGB8, m_width, m_height);
             glTextureSubImage2D(m_id, 0, 0, 0, m_width, m_height, format, GL_UNSIGNED_BYTE, data);
 
-            //   glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
             glGenerateMipmap(GL_TEXTURE_2D);
 
             glTextureParameteri(m_id, GL_TEXTURE_WRAP_S, GL_REPEAT);

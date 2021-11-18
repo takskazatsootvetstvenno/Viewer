@@ -39,11 +39,11 @@ namespace TestEngine {
 		}
 		ImGui::EndChild();
 
-		std::string commandStr(10, '\0');
+		std::string commandStr(30, '\0');
 		ImGuiInputTextFlags input_text_flags = ImGuiInputTextFlags_EnterReturnsTrue;
 		if (ImGui::InputText("Input command", &commandStr[0], commandStr.size(), input_text_flags))
 		{
-			EventCommandInput event(commandStr);
+			EventCommandInput event(commandStr.substr(0, commandStr.find_first_of('\0')));
 			EventCallbackFn(event);
 			ImGui::SetKeyboardFocusHere(-1);
 		}

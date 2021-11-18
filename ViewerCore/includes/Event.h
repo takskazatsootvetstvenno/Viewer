@@ -98,6 +98,8 @@ namespace TestEngine
 	public:
 		EventCommandInput(std::string& input_command)
 			:command(std::move(input_command)) {}
+		EventCommandInput(std::string&& input_command)
+			:command(std::move(input_command)) {}
 		virtual EventType get_type() const override
 		{
 			return EventType::CommandInput;

@@ -22,7 +22,6 @@ namespace TestEngine {
 
 	void VertexBuffer::updateData(const void* data, const size_t size, const EUsage usage)
 	{
-		//glNamedBufferData(m_id, size, data, convert_usage_to_GLenum(usage));
 		glNamedBufferSubData(m_id, 0, size, data);
 	}
 	VertexBuffer::~VertexBuffer()

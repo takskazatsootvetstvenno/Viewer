@@ -22,16 +22,6 @@ namespace TestEngine {
         glm::fvec3 Normal;
         glm::fvec2 TexCoord;
     };
-
-   
-    /*const std::vector<std::string> Model::getModelTextureNames(unsigned int id) const {
-        return m_vData.m_vecTextureNames;
-    }*/
-
-    //const VertexBuffer& Model::getBuffer(unsigned int id) const { return m_vData[id].m_VBO; }
-
-    //const IndexBuffer& Model::getIndexBuffer(unsigned int id) const { return m_vData[id].m_EBO; }
-
     const std::vector<Mesh>& Model::getMeshData() const{
         return m_vData;
     }
@@ -41,37 +31,26 @@ namespace TestEngine {
         return m_vData;
     }
 
-   // const unsigned int Model::getBufferNum() const { return m_vData.size(); }
-
     void processMesh(aiMesh* mesh, std::vector<Vertex>& vertices,
                      std::vector<unsigned int>& indices) {
-        // ÷икл по всем вершинам меша
         for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
             Vertex vertex;
-            glm::vec3 vector;  // мы объ€вл€ем промежуточный вектор, т.к. Assimp использует свой
-                               // собственный векторный класс, который не преобразуетс€ напр€мую в
-                               // тип glm::vec3, поэтому сначала мы передаем данные в этот
-                               // промежуточный вектор типа glm::vec3
-            //  оординаты
+            glm::vec3 vector; 
+
             vector.x = mesh->mVertices[i].x;
             vector.y = mesh->mVertices[i].y;
             vector.z = mesh->mVertices[i].z;
             vertex.Position = vector;
 
-            // Ќормали
             vector.x = mesh->mNormals[i].x;
             vector.y = mesh->mNormals[i].y;
             vector.z = mesh->mNormals[i].z;
             vertex.Normal = vector;
            
-            // “екстурные координаты
-            if (mesh->mTextureCoords[0])  // если меш содержит текстурные координаты
+            if (mesh->mTextureCoords[0])
             {
                 glm::vec2 vec;
 
-                // ¬ершина может содержать до 8 различных текстурных координат. ћы предполагаем, что
-                // мы не будем использовать модели, в которых вершина может содержать несколько
-                // текстурных координат, поэтому мы всегда берем первый набор (0)
                 vec.x = mesh->mTextureCoords[0][i].x;
                 vec.y = mesh->mTextureCoords[0][i].y;
                 vertex.TexCoord = vec;
@@ -91,10 +70,8 @@ namespace TestEngine {
     {
         Assimp::Importer importer;
         const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate);
-        // ѕроверка на ошибки aiProcess_CalcTangentSpace  aiProcess_PreTransformVertices
-        // aiProcess_FlipUVs
         if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
-            LogManager::Error() << "[ASSIMP] " << importer.GetErrorString() << LogManager::Show();
+            LogManager::Error() << "[ASSIMP] " << importer.GetErrorString() << LogManager::Endl() << LogManager::Show();
             return;
         }
 
@@ -102,7 +79,6 @@ namespace TestEngine {
 
         std::vector<Vertex> vertices;
         std::vector<unsigned int> indices;
-
 
         for (unsigned int child_id = 0; child_id < scene->mRootNode->mNumChildren; child_id++) {
             for (unsigned int i = 0; i < scene->mRootNode->mChildren[child_id]->mNumMeshes; i++) {

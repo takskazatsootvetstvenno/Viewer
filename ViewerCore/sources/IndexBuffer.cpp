@@ -11,7 +11,7 @@ namespace TestEngine {
         case IndexBuffer::EUsage::Stream:  return GL_STREAM_DRAW;
         }
 
-        LogManager::Error() <<"Unknown VertexBuffer usage"<< LogManager::Show();
+        LogManager::Error() << "Unknown VertexBuffer usage\n" << LogManager::Show();
         return GL_STREAM_DRAW;
     }
     IndexBuffer::~IndexBuffer()

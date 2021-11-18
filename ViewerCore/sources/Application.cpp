@@ -33,7 +33,7 @@ int Application::start(const unsigned int width, const unsigned int height, std:
 		{
 			if(event.command.empty()) return;
 			std::string command = stringTrim(event.command);
-			LogManager::Command() << command << LogManager::Show();
+			LogManager::Command() << command << LogManager::Endl() << LogManager::Show();
 
 			std::for_each(command.begin(), command.end(), 
 				[](char& c) {c = std::toupper(c);}
@@ -45,6 +45,7 @@ int Application::start(const unsigned int width, const unsigned int height, std:
 			ist >> tempArg;
 			while (ist >> tempArg)
 				arguments.push_back(tempArg);
+			command.shrink_to_fit();
 			if (command == "EXIT")
 			{
 				LogManager::Info() << "Exit program" << LogManager::Show();
@@ -58,13 +59,13 @@ int Application::start(const unsigned int width, const unsigned int height, std:
 					int y = std::stoi(arguments[1]);
 					if (x >= 0 && x < 6 && y >= 0 && y < 6) {
 						Game::Instance().setField(std::stoi(arguments[0]), std::stoi(arguments[1]));
-						LogManager::Info() << "Setting a value..." << LogManager::Show();
+						LogManager::Info() << "Setting a value..." << LogManager::Endl() << LogManager::Show();
 					}
 					else
-						LogManager::Info() << "Invalid arguments" << LogManager::Show();
+						LogManager::Info() << "Invalid arguments" << LogManager::Endl() << LogManager::Show();
 				}
 				else		
-				LogManager::Info() << "Need 2 arguments!" << LogManager::Show();
+				LogManager::Info() << "Need 2 arguments!" << LogManager::Endl() << LogManager::Show();
 				isRecognized = true;
 			}
 			if (command.substr(0, 1) == "V")
@@ -74,13 +75,13 @@ int Application::start(const unsigned int width, const unsigned int height, std:
 					int y = std::stoi(arguments[1]);
 					if (x >= 0 && x < 6 && y >= 0 && y < 6) {
 						Game::Instance().setField(std::stoi(arguments[0]), std::stoi(arguments[1]));
-						LogManager::Info() << "Setting a value..." << LogManager::Show();
+						LogManager::Info() << "Setting a value..." << LogManager::Endl() << LogManager::Show();
 					}
 					else
-						LogManager::Info() << "Invalid arguments" << LogManager::Show();
+						LogManager::Info() << "Invalid arguments" << LogManager::Endl() << LogManager::Show();
 				}
 				else
-					LogManager::Info() << "Need 2 arguments!" << LogManager::Show();
+					LogManager::Info() << "Need 2 arguments!" << LogManager::Endl() << LogManager::Show();
 				isRecognized = true;
 			}
 			if (command == "CLS" || command == "CLEAR")
@@ -91,22 +92,22 @@ int Application::start(const unsigned int width, const unsigned int height, std:
 			if (command == "CLEAR MAP")
 			{
 				Game::Instance().clearFields();
-				LogManager::Info() << "Map is cleared!" << LogManager::Show();
+				LogManager::Info() << "Map is cleared!" << LogManager::Endl() << LogManager::Show();
 				isRecognized = true;
 			}
 			if (command == "DRAW CROSS")
 			{
 				Game::Instance().drawCross();
-				LogManager::Info() << "Cross is drawn!" << LogManager::Show();
+				LogManager::Info() << "Cross is drawn!" << LogManager::Endl() << LogManager::Show();
 				isRecognized = true;
 			}
 			if (command == "HELP")
 			{
-				LogManager::Info() << "Only god can help you, dude!" << LogManager::Show();
+				LogManager::Info() << "Only god can help you, dude!" << LogManager::Endl() << LogManager::Show();
 				isRecognized = true;
 			}
 			if(false == isRecognized)
-				LogManager::Info() << "The command \""<< command << "\" was not recognized" << LogManager::Show();
+				LogManager::Info() << "The command \""<< command << "\" was not recognized" << LogManager::Endl() << LogManager::Show();
 		}
 	);
 
@@ -121,7 +122,7 @@ int Application::start(const unsigned int width, const unsigned int height, std:
 		[&](EventScroll& event)
 		{
 			//LogManager::Info() << "[Scroll] y = " << event.y << "\n"<< LogManager::Show();
-			m_pWindow->addCameraDistance(event.y);
+			m_pWindow->addCameraDistance(static_cast<float>(event.y));
 		}
 	);
 
@@ -131,10 +132,10 @@ int Application::start(const unsigned int width, const unsigned int height, std:
 			switch (event.key)
 			{
 			case 81:	//Q
-				m_pWindow->addCameraRotation(-0.05);
+				m_pWindow->addCameraRotation(static_cast<float>(-0.05));
 			break;
 			case 69:	//E
-				m_pWindow->addCameraRotation(0.05);
+				m_pWindow->addCameraRotation(static_cast<float>(0.05));
 				break;
 			}
 		}

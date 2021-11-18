@@ -26,11 +26,11 @@ namespace TestEngine
 {
 	void APIENTRY glDebugOutput(GLenum source, GLenum type, unsigned int id, GLenum severity, GLsizei length,
 		const char* message, const void* userParam) {
-		if (
-			id == 131169 ||
+		if (id == 131169 ||
 			id == 131185 ||
 			id == 131204 ||
 			id == 131218)return;
+			
 		
 		LogManager::Error() << "---------------\n";
 		LogManager::Error() << "OpenGL debug message (" << id << "): " << message << LogManager::Show();
@@ -104,23 +104,7 @@ namespace TestEngine
 		}
 		LogManager::Error() << "\n\n" << LogManager::Show();
 	}
-
-	GLfloat positions_colors[] = {
-	 0.0f, 0.5f, 0.0f,   1.0f, 1.0f, 0.0f,
-	0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 1.0f,
-	-0.5f, -0.5f, 0.0f,   1.0f, 1.0f, 1.0f,
-	-0.5f, 0.5f, 0.0f,   0.0f, 1.0f, 1.0f 
-	};
-	glm::mat4 m(1.0f);//= glm::ortho(-10, 10, -10, 10);
-	glm::mat4 mModel(1.0f);
-	glm::vec4 clearColor(1.0, 0.0, 1.0, 1.0);
-	
-	Window::~Window()
-	{
-		glfwDestroyWindow(m_pWindow);
-		glfwTerminate();
-	}
-	
+		
 	Window::Window(const unsigned int width, const unsigned int height, std::string title)
 		:m_data({ width, height, std::move(title)})
 	{
@@ -130,19 +114,27 @@ namespace TestEngine
 		ImGui::CreateContext();
 		ImGui_ImplOpenGL3_Init("#version 460");
 		ImGui_ImplGlfw_InitForOpenGL(m_pWindow, true);
+		LogManager::Info() << "List of commands:\n";
+		LogManager::Info() << "Place smth on board: v [0..6] [0..6]\n";
+		LogManager::Info() << "Clear the screen: cls\n" << LogManager::Show();
 	}
+	glm::mat4 m(1.0f);
+	glm::mat4 mModel(1.0f);
+	glm::vec4 clearColor(1.0, 0.0, 1.0, 1.0);
+	float displacement = 6.f;
+
 	void Window::init()
 	{
-
-		if (!glfwInit()) { LogManager::Error() << "Can't initialize glfw!!" << LogManager::Show(); }
+		if (!glfwInit()) LogManager::Error() << "Can't initialize glfw!!" << LogManager::Show(); 
 
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	#ifdef CMAKE_BUILD_TYPE_DEBUG
+        glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);  // DEBUG
+	#endif
 
-		//glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);  // DEBUG
-
-		m_pWindow = glfwCreateWindow(m_data.m_width, m_data.m_height, m_data.m_title.c_str(), nullptr, nullptr);
+        m_pWindow = glfwCreateWindow(m_data.m_width, m_data.m_height, m_data.m_title.c_str(), nullptr, nullptr);
 		if (!m_pWindow) {
 			LogManager::Error() << "\nCan't create Window!!" << LogManager::Show();
 			glfwTerminate();
@@ -150,20 +142,21 @@ namespace TestEngine
 		glfwMakeContextCurrent(m_pWindow);
 		glfwSwapInterval(0);
 		glewExperimental = GL_TRUE;
-		if (glewInit() != GLEW_OK) { LogManager::Error() << "Can't initialize GLEW!" << LogManager::Show();
-		}
+		if (glewInit() != GLEW_OK)  LogManager::Error() << "Can't initialize GLEW!" << LogManager::Show();
 
-		int flags;
-        /*
-		glGetIntegerv(GL_CONTEXT_FLAGS, &flags);  // DEBUG
-		if (flags & GL_CONTEXT_FLAG_DEBUG_BIT) {
-			glEnable(GL_DEBUG_OUTPUT);
-			glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-			glDebugMessageCallback(glDebugOutput, nullptr);
-			glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
-		}*/
+	#ifdef CMAKE_BUILD_TYPE_DEBUG
+        glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);  // DEBUG
+        int flags;
+        glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
+        if (flags & GL_CONTEXT_FLAG_DEBUG_BIT) {
+            glEnable(GL_DEBUG_OUTPUT);
+            glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+            glDebugMessageCallback(glDebugOutput, nullptr);
+            glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
+        }
+	#endif
 
-		glfwSetWindowUserPointer(m_pWindow, &m_data);
+        glfwSetWindowUserPointer(m_pWindow, &m_data);
 		glfwSetWindowSizeCallback(m_pWindow,
 			[](GLFWwindow* pWindow, int width, int height)
 			{
@@ -206,7 +199,6 @@ namespace TestEngine
 			ShaderDataType::Float3,
 			ShaderDataType::Float3,
 		};
-
 		
 		ResourceManager::Instance().getUBO(ResourceManager::GLOBAL_UBO::GENERAL_MATRICES).updateElementData(
 			[&](glm::mat4& m) {
@@ -216,20 +208,11 @@ namespace TestEngine
 			}(mModel), 2);
 		
 	}
-	size_t Window::getWidth() const
-	{
-		return m_data.m_width;
-	}
-	size_t Window::getHeight() const
-	{
-		return m_data.m_height;
-	}
-
-	float displacement = 6.f;
+	
 	void Window::onUpdate()
 	{
 		glfwPollEvents();
-		glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
+		glClearColor(1.f, 0.f, 1.f, 0.f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		ImGuiIO& io = ImGui::GetIO();
@@ -249,16 +232,14 @@ namespace TestEngine
 				static_cast<double>((m_data.m_width * 1.0) / m_data.m_height),
 				0.1, 100.0);
 			return glm::value_ptr(m);
-			}(),0);
+			}(), 0);
 		UBO.updateElementData([&](float t, float r, float displacement) {//view
 				m = glm::lookAt(glm::vec3(r * cos(t), r * sin(t), displacement),
 					glm::vec3(0, 0, 0),
 					glm::vec3(0, 0, 1));
 				return glm::value_ptr(m);
 				}(getCameraRotation(), getCameraDistance(), displacement), 1);
-	
-		//p_VAO->bind();
-		
+
 		glEnable(GL_DEPTH_TEST);
 		for (const auto& mesh : ResourceManager::Instance().getMeshes())
 		{
@@ -289,7 +270,7 @@ namespace TestEngine
 	}
 	void Window::addCameraDistance(float newValue)
 	{
-		if (m_CameraData.distance - newValue <= 0)return;
+		if (m_CameraData.distance - newValue <= 0) return;
 		m_CameraData.distance -= newValue;
 	}
 	void Window::addCameraRotation(float newValue)
@@ -303,6 +284,22 @@ namespace TestEngine
 	float Window::getCameraRotation() const
 	{
 		return m_CameraData.rotation;
+	}
+
+	Window::~Window()
+	{
+		glfwDestroyWindow(m_pWindow);
+		glfwTerminate();
+	}
+
+	size_t Window::getWidth() const
+	{
+		return m_data.m_width;
+	}
+
+	size_t Window::getHeight() const
+	{
+		return m_data.m_height;
 	}
 }
 

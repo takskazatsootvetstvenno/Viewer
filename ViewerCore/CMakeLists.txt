@@ -12,14 +12,11 @@ set(CORE_INCLUDES
 	includes/Event.h
 	includes/Game.h
 	includes/IndexBuffer.h
-	includes/IResource.h
 	includes/LogManager.h
 	includes/Mesh.h
-	includes/MeshResource.h
 	includes/Model.h
 	includes/ResourceManager.h
 	includes/ShaderProgram.h
-	includes/ShaderResource.h
 	includes/Texture.h
 	includes/UniformBuffer.h
 	includes/VertexArray.h
@@ -38,11 +35,9 @@ set(CORE_SOURCES
 	sources/LogManager.cpp
 	sources/main.cpp
 	sources/Mesh.cpp
-	sources/MeshResource.cpp
 	sources/Model.cpp
 	sources/ResourceManager.cpp
 	sources/ShaderProgram.cpp
-	sources/ShaderResource.cpp
 	sources/Texture.cpp
 	sources/UniformBuffer.cpp
 	sources/VertexArray.cpp
@@ -68,6 +63,10 @@ add_custom_command(TARGET ${CORE_PROJECT_NAME}
     COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_SOURCE_DIR}/data/Shaders/General.vert ${PROJECT_BINARY_DIR}/ViewerCore/Shaders/General.vert
     COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_SOURCE_DIR}/data/Shaders/Red.frag ${PROJECT_BINARY_DIR}/ViewerCore/Shaders/Red.frag
     COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_SOURCE_DIR}/data/Shaders/Red.vert ${PROJECT_BINARY_DIR}/ViewerCore/Shaders/Red.vert
+	
+	COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_SOURCE_DIR}/data/Models/map.mtl ${PROJECT_BINARY_DIR}/ViewerCore/Models/map.mtl 
+	COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_SOURCE_DIR}/data/Models/map.obj ${PROJECT_BINARY_DIR}/ViewerCore/Models/map.obj
+	COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_SOURCE_DIR}/data/Models/wood.jpg ${PROJECT_BINARY_DIR}/ViewerCore/Models/wood.jpg
 )
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
 	add_compile_definitions(CMAKE_BUILD_TYPE_RELEASE)

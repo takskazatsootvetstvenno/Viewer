@@ -2,7 +2,6 @@
 #include<memory>
 #include"Application.h"
 
-
 int main()
 {
 #if CMAKE_BUILD_TYPE_RELEASE
@@ -10,6 +9,7 @@ int main()
 #else
 	TestEngine::LogManager::Info() << "This is DEBUG solution\n" << TestEngine::LogManager::Show();
 #endif
+
 #ifdef _WIN32 
 	TestEngine::LogManager::Info() << "Running on Windos OS\n" << TestEngine::LogManager::Show();
 #elif __unix__ 
@@ -19,8 +19,8 @@ int main()
 #elif __APPLE__
     TestEngine::LogManager::Info() << "Running on Mac OS\n" << TestEngine::LogManager::Show();
 #endif 
+
 	auto App = std::make_unique<TestEngine::Application>();
-	int returnCode = App->start(1280, 720, "test1");
-	//system("pause");
+	int returnCode = App->start(1280, 720, "Viewer");
 	return returnCode;
 }

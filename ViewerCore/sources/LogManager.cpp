@@ -26,6 +26,7 @@ namespace TestEngine {
 				break;
 			}
 			m_console_string_changed = true;
+			break;
 		case MessageCommand::Endl:
 			m_buffer_string += '\n';
 			break;
@@ -35,11 +36,12 @@ namespace TestEngine {
 	LogManager& LogManager::operator<<(const MessageType& type)
 	{
 		if (is_time_draw){
-			time_t now = time(0);
-			tm ltm;
+			//TO DO - FIX THE TIME
+			//time_t now = time(0);
+			//tm ltm;
 			//localtime_r(&ltm, &now);
 			//m_buffer_string += std::to_string(ltm.tm_hour) + ":" + std::to_string(ltm.tm_min) + ":" + std::to_string(ltm.tm_sec) + " ";
-            m_buffer_string += "Time is subjective| ";
+            m_buffer_string += "Time is subjective | ";
 		}
 		switch (type)
 		{
@@ -74,5 +76,9 @@ namespace TestEngine {
 	MessageCommand LogManager::Show()
 	{
 		return MessageCommand::Show;
+	}
+	MessageCommand LogManager::Endl()
+	{
+		return MessageCommand::Endl;
 	}
 }

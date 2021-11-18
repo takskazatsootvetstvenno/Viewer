@@ -7,7 +7,7 @@ cd ..
 rm -r build
 rm -r install
 mkdir build
-conan install Viewer -if build --build missing -s build_type=Release
+conan install Viewer -if build --build missing -s build_type=Release -r conancenter
 cd build
 cmake ../Viewer -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
 cmake --build . --config Release

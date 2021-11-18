@@ -9,7 +9,7 @@ namespace TestEngine {
 		std::ifstream inFile(shader_path);
 		std::string source((std::istreambuf_iterator<char>(inFile)), std::istreambuf_iterator<char>());
 		if (source.empty())
-			LogManager::Error() << "Can't load shader! Path: " << shader_path << '\n' << LogManager::Show();
+			LogManager::Error() << "Can't load shader! Path: " << shader_path << "\n" << LogManager::Show();
 
 		const char* src = source.c_str();
 		glShaderSource(shader_id, 1, &src, nullptr);
