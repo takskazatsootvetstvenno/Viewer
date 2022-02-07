@@ -8,9 +8,12 @@ For Linux OS: LinuxDebug.sh or LinuxRelease.sh
 
 This project requires:
 Cmake, 
-Visual studio 2019,
+Conan, 
+Visual studio 2019
 
 # Building
+ 
+For Windows example: 
  
 Create new directory (for example "test_dir"),
  
